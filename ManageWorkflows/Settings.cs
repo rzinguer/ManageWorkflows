@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ManageWorkflows
+﻿namespace ManageWorkflows
 {
     /// <summary>
     /// This class can help you to store settings for your plugin

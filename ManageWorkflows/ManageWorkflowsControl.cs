@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Collections;
-using System.Configuration;
-using System.Net;
 using System.IO;
 using Microsoft.Crm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Client;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml;
 using System.Runtime.InteropServices;
 using Excel = Microsoft.Office.Interop.Excel;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using XrmToolBox.Extensibility;
 using Microsoft.Xrm.Sdk.Query;
@@ -304,6 +293,11 @@ namespace ManageWorkflows
 
 
             }
+        }
+
+        private void tsbClose_Click_1(object sender, EventArgs e)
+        {
+            CloseTool();
         }
     }
 
