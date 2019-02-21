@@ -121,7 +121,7 @@
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Location = new System.Drawing.Point(16, 59);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(730, 454);
+            this.checkedListBox1.Size = new System.Drawing.Size(714, 454);
             this.checkedListBox1.TabIndex = 5;
             // 
             // label1
@@ -132,25 +132,25 @@
             this.label1.Location = new System.Drawing.Point(13, 33);
             this.label1.Name = "label1";
             this.label1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label1.Size = new System.Drawing.Size(169, 23);
+            this.label1.Size = new System.Drawing.Size(151, 23);
             this.label1.TabIndex = 9;
-            this.label1.Text = "All Processes export to Excel";
+            this.label1.Text = "All Processes export file";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txtFilePath
             // 
             this.txtFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFilePath.Location = new System.Drawing.Point(188, 33);
+            this.txtFilePath.Location = new System.Drawing.Point(170, 33);
             this.txtFilePath.Name = "txtFilePath";
             this.txtFilePath.ReadOnly = true;
-            this.txtFilePath.Size = new System.Drawing.Size(540, 20);
+            this.txtFilePath.Size = new System.Drawing.Size(568, 20);
             this.txtFilePath.TabIndex = 7;
             // 
             // btnBrowseImportFile
             // 
             this.btnBrowseImportFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBrowseImportFile.Location = new System.Drawing.Point(734, 33);
+            this.btnBrowseImportFile.Location = new System.Drawing.Point(744, 33);
             this.btnBrowseImportFile.Name = "btnBrowseImportFile";
             this.btnBrowseImportFile.Size = new System.Drawing.Size(75, 23);
             this.btnBrowseImportFile.TabIndex = 8;

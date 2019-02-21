@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Crm.Sdk.Messages;
 using System.Runtime.InteropServices;
@@ -15,6 +16,9 @@ namespace ManageWorkflows
     public partial class ManageWorkflowsControl : PluginControlBase
     {
         private Settings mySettings;
+        public static string errorMsg = "";
+
+        private static readonly Guid AdminRoleTemplateId = new Guid("627090FF-40A3-4053-8790-584EDC5BE201");
 
         public ManageWorkflowsControl()
         {
@@ -22,7 +26,7 @@ namespace ManageWorkflows
         }
 
         private void MyPluginControl_Load(object sender, EventArgs e)
-        {            
+        {
             // Loads or creates the settings for the plugin
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
             {
@@ -50,6 +54,10 @@ namespace ManageWorkflows
 
         private void GetWorkflows()
         {
+            // Find UserId of the running user
+            Guid userId = currentUser();
+            bool isAdmin = isAdminRole(userId);
+
             WorkAsync(new WorkAsyncInfo
             {
                 Message = "Getting workflows",
@@ -63,6 +71,11 @@ namespace ManageWorkflows
                     QEworkflow.ColumnSet.AddColumns("name", "uniquename", "statecode", "primaryentity", "ownerid", "createdon", "category", "type", "businessprocesstype", "workflowid");
                     QEworkflow.AddOrder("name", OrderType.Ascending);
 
+                    if (!isAdmin)
+                    {
+                        QEworkflow.Criteria.AddCondition("ownerid", ConditionOperator.Equal, userId);
+                    }
+
                     args.Result = Service.RetrieveMultiple(QEworkflow);
                 },
                 PostWorkCallBack = (args) =>
@@ -74,9 +87,13 @@ namespace ManageWorkflows
                     EntityCollection result = args.Result as EntityCollection;
                     if (result != null)
                     {
+                        if (!isAdmin)
+                            ShowWarningNotification("Current user is not in System Admin role. Shows only workflows owned by the user", new Uri("https://docs.microsoft.com/en-us/dynamics365/customer-engagement/customize/workflow-processes#activate-a-workflow"));
+
                         //MessageBox.Show($"Found {result.Entities.Count} workflows");
 
-                        checkedListBox1.DisplayMember = "name";
+                        checkedListBox1.Items.Clear();
+
                         foreach (Entity item in result.Entities)
                         {
                             string type = item.FormattedValues["type"];
@@ -100,6 +117,77 @@ namespace ManageWorkflows
                     }
                 }
             });
+        }
+
+        private void UpdateWorkflows()
+        {
+            List<WorkflowList> items = new List<WorkflowList>();
+
+            WorkAsync(new WorkAsyncInfo
+            {
+                Message = "Updating Workflows...",
+                Work = (bw, evt) =>
+                {
+                    int totalItems = checkedListBox1.Items.Count;
+                    
+                    for (int i = 0; i < totalItems; i++)
+                    {
+                        if (errorMsg.Length > 0)
+                        {
+                            errorMsg = "";
+                            break;
+                        }
+                        WorkflowList item = (WorkflowList)checkedListBox1.Items[i];
+                        //Guid wfGuid = new Guid(item.RealValue);
+                        bool origStatus = item.State;
+
+                        bool currentStatus = checkedListBox1.GetItemCheckState(i).ToString() == "Checked" ? true : false;
+                        string currentStatusValue = currentStatus ? "Activated" : "Draft";
+
+                        if (origStatus != currentStatus)
+                        {
+                            item.State = currentStatus;
+                            items.Add(item);
+                            SetStateWorkflow(item, currentStatusValue, Service);
+                        }
+                    }
+                },
+                PostWorkCallBack = evt =>
+                {
+                    if (evt.Error != null)
+                    {
+                        string errorMessage = CrmExceptionHelper.GetErrorMessage(evt.Error, true);
+                        MessageBox.Show(this, errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    foreach (WorkflowList item in items)
+                    {
+                        checkedListBox1.Items[checkedListBox1.Items.IndexOf(item)] = item;
+                    }
+                },
+                AsyncArgument = null,
+                IsCancelable = true,
+                MessageWidth = 340,
+                MessageHeight = 150
+            });
+        }
+
+        public bool isAdminRole(Guid systemUserId)
+        {
+            var query = new QueryExpression("role");
+            query.Criteria.AddCondition("roletemplateid", ConditionOperator.Equal, AdminRoleTemplateId);
+            var link = query.AddLink("systemuserroles", "roleid", "roleid");
+            link.LinkCriteria.AddCondition("systemuserid", ConditionOperator.Equal, systemUserId);
+
+            return Service.RetrieveMultiple(query).Entities.Count > 0;
+        }
+
+        public Guid currentUser()
+        {
+            var request = new WhoAmIRequest();
+            var response = (WhoAmIResponse)Service.Execute(request);
+
+            return response.UserId;
         }
 
         /// <summary>
@@ -222,78 +310,58 @@ namespace ManageWorkflows
             return processList;
         }
 
-        private static void SetStateWorkflow(Guid workflowid, string state, IOrganizationService service)
+        private void SetStateWorkflow(WorkflowList item, string state, IOrganizationService service)
         {
             SetStateRequest stateRequest;
             int statecode, statuscode;
-
-            if (state == "Draft")
+            Guid workflowid = new Guid(item.RealValue);
+            try
             {
-                statecode = 0;
-                statuscode = 1;
-
-                stateRequest = new SetStateRequest
+                if (state == "Draft")
                 {
-                    EntityMoniker = new EntityReference("workflow", workflowid),
-                    State = new OptionSetValue(statecode),
-                    Status = new OptionSetValue(statuscode)
-                };
-                SetStateResponse stateSet = (SetStateResponse)service.Execute(stateRequest);
+                    statecode = 0;
+                    statuscode = 1;
+
+                    stateRequest = new SetStateRequest
+                    {
+                        EntityMoniker = new EntityReference("workflow", workflowid),
+                        State = new OptionSetValue(statecode),
+                        Status = new OptionSetValue(statuscode)
+                    };
+                    SetStateResponse stateSet = (SetStateResponse)service.Execute(stateRequest);
+                }
+
+                if (state == "Activated")
+                {
+                    statecode = 1;
+                    statuscode = 2;
+
+                    stateRequest = new SetStateRequest
+                    {
+                        EntityMoniker = new EntityReference("workflow", workflowid),
+                        State = new OptionSetValue(statecode),
+                        Status = new OptionSetValue(statuscode)
+                    };
+
+                    SetStateResponse stateSet = (SetStateResponse)service.Execute(stateRequest);
+                }
             }
-
-            if (state == "Activated")
+            catch (System.ObjectDisposedException ex)
             {
-                statecode = 1;
-                statuscode = 2;
-
-                stateRequest = new SetStateRequest
-                {
-                    EntityMoniker = new EntityReference("workflow", workflowid),
-                    State = new OptionSetValue(statecode),
-                    Status = new OptionSetValue(statuscode)
-                };
-                SetStateResponse stateSet = (SetStateResponse)service.Execute(stateRequest);
+                string msg = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString(), "Manage Workflows");
+                errorMsg = ex.Message;
             }
         }
 
         private void tsbUpdateWorkflows_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < checkedListBox1.Items.Count; i++)
-            {
-                WorkflowList item = (WorkflowList)checkedListBox1.Items[i];
-                Guid wfGuid = new Guid(item.RealValue);
-                bool origStatus = item.State;
-
-                bool currentStatus = checkedListBox1.GetItemCheckState(i).ToString() == "Checked" ? true : false;
-                string currentStatusValue = currentStatus ? "Activated" : "Draft";
-
-                if (origStatus != currentStatus)
-                {
-                    item.State = currentStatus;
-                    checkedListBox1.Items[i] = item;
-                    WorkAsync(new WorkAsyncInfo
-                    {
-                        Message = "Updating Workflows...",
-                        Work = (bw, evt) =>
-                        {
-                            SetStateWorkflow(wfGuid, currentStatusValue, Service);
-                        },
-                        PostWorkCallBack = evt =>
-                        {
-                            if (evt.Error != null)
-                            {
-                                string errorMessage = CrmExceptionHelper.GetErrorMessage(evt.Error, true);
-                                MessageBox.Show(this, errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        },
-                        ProgressChanged = evt => { SetWorkingMessage(evt.UserState.ToString()); }
-                    });
-                    
-                }
-
-
-            }
+            ExecuteMethod(UpdateWorkflows);
         }
+        
 
         private void tsbClose_Click_1(object sender, EventArgs e)
         {
@@ -305,7 +373,6 @@ namespace ManageWorkflows
     {
         public string FriendlyValue { get; set; }
         public string RealValue { get; set; }
-
         public bool State { get; set; }
     }
 }
