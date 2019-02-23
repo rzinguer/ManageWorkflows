@@ -37,11 +37,17 @@
             this.tsbUpdateWorkflowsList = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbUpdateWorkflows = new System.Windows.Forms.ToolStripButton();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.checkAll = new System.Windows.Forms.CheckBox();
             this.txtFilePath = new System.Windows.Forms.TextBox();
             this.btnBrowseImportFile = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.toolStripMenu.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripMenu
@@ -57,7 +63,7 @@
             this.tsbUpdateWorkflows});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
-            this.toolStripMenu.Size = new System.Drawing.Size(831, 31);
+            this.toolStripMenu.Size = new System.Drawing.Size(724, 25);
             this.toolStripMenu.TabIndex = 4;
             this.toolStripMenu.Text = "toolStrip1";
             // 
@@ -65,23 +71,24 @@
             // 
             this.tsbClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsbClose.Image = ((System.Drawing.Image)(resources.GetObject("tsbClose.Image")));
+            this.tsbClose.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbClose.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbClose.Name = "tsbClose";
-            this.tsbClose.Size = new System.Drawing.Size(28, 28);
+            this.tsbClose.Size = new System.Drawing.Size(23, 22);
             this.tsbClose.Text = "Close this tool";
             this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click_1);
             // 
             // tssSeparator1
             // 
             this.tssSeparator1.Name = "tssSeparator1";
-            this.tssSeparator1.Size = new System.Drawing.Size(6, 31);
+            this.tssSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // tsbLoadWorkflows
             // 
             this.tsbLoadWorkflows.Image = ((System.Drawing.Image)(resources.GetObject("tsbLoadWorkflows.Image")));
             this.tsbLoadWorkflows.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbLoadWorkflows.Name = "tsbLoadWorkflows";
-            this.tsbLoadWorkflows.Size = new System.Drawing.Size(112, 28);
+            this.tsbLoadWorkflows.Size = new System.Drawing.Size(112, 22);
             this.tsbLoadWorkflows.Text = "Load Workflows";
             this.tsbLoadWorkflows.ToolTipText = "Load Workflows";
             this.tsbLoadWorkflows.Click += new System.EventHandler(this.tsbSample_Click);
@@ -89,14 +96,14 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // tsbUpdateWorkflowsList
             // 
             this.tsbUpdateWorkflowsList.Image = ((System.Drawing.Image)(resources.GetObject("tsbUpdateWorkflowsList.Image")));
             this.tsbUpdateWorkflowsList.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbUpdateWorkflowsList.Name = "tsbUpdateWorkflowsList";
-            this.tsbUpdateWorkflowsList.Size = new System.Drawing.Size(144, 28);
+            this.tsbUpdateWorkflowsList.Size = new System.Drawing.Size(144, 22);
             this.tsbUpdateWorkflowsList.Text = "Update List from Excel";
             this.tsbUpdateWorkflowsList.ToolTipText = "Update List";
             this.tsbUpdateWorkflowsList.Click += new System.EventHandler(this.ToolStripButton1_Click);
@@ -104,53 +111,49 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // tsbUpdateWorkflows
             // 
             this.tsbUpdateWorkflows.Image = ((System.Drawing.Image)(resources.GetObject("tsbUpdateWorkflows.Image")));
             this.tsbUpdateWorkflows.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsbUpdateWorkflows.Name = "tsbUpdateWorkflows";
-            this.tsbUpdateWorkflows.Size = new System.Drawing.Size(189, 28);
+            this.tsbUpdateWorkflows.Size = new System.Drawing.Size(189, 22);
             this.tsbUpdateWorkflows.Text = "Activate/Deactivate Workflows";
             this.tsbUpdateWorkflows.ToolTipText = "Update Server";
             this.tsbUpdateWorkflows.Click += new System.EventHandler(this.tsbUpdateWorkflows_Click);
             // 
-            // checkedListBox1
+            // checkAll
             // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(16, 59);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(714, 454);
-            this.checkedListBox1.TabIndex = 5;
-            // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label1.Image = ((System.Drawing.Image)(resources.GetObject("label1.Image")));
-            this.label1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label1.Location = new System.Drawing.Point(13, 33);
-            this.label1.Name = "label1";
-            this.label1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label1.Size = new System.Drawing.Size(151, 23);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "All Processes export file";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkAll.AutoSize = true;
+            this.checkAll.BackColor = System.Drawing.SystemColors.Control;
+            this.checkAll.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.checkAll.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.checkAll.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkAll.Location = new System.Drawing.Point(2, 3);
+            this.checkAll.Margin = new System.Windows.Forms.Padding(2, 3, 3, 0);
+            this.checkAll.Name = "checkAll";
+            this.checkAll.Size = new System.Drawing.Size(80, 20);
+            this.checkAll.TabIndex = 10;
+            this.checkAll.Text = "Select All";
+            this.checkAll.UseVisualStyleBackColor = false;
+            this.checkAll.CheckedChanged += new System.EventHandler(this.checkAll_CheckedChanged);
             // 
             // txtFilePath
             // 
+            this.txtFilePath.AccessibleDescription = "All Processes Export File";
             this.txtFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFilePath.Location = new System.Drawing.Point(170, 33);
+            this.txtFilePath.Location = new System.Drawing.Point(7, 21);
             this.txtFilePath.Name = "txtFilePath";
             this.txtFilePath.ReadOnly = true;
-            this.txtFilePath.Size = new System.Drawing.Size(568, 20);
+            this.txtFilePath.Size = new System.Drawing.Size(617, 20);
             this.txtFilePath.TabIndex = 7;
             // 
             // btnBrowseImportFile
             // 
             this.btnBrowseImportFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBrowseImportFile.Location = new System.Drawing.Point(744, 33);
+            this.btnBrowseImportFile.Location = new System.Drawing.Point(630, 19);
             this.btnBrowseImportFile.Name = "btnBrowseImportFile";
             this.btnBrowseImportFile.Size = new System.Drawing.Size(75, 23);
             this.btnBrowseImportFile.TabIndex = 8;
@@ -158,20 +161,69 @@
             this.btnBrowseImportFile.UseVisualStyleBackColor = true;
             this.btnBrowseImportFile.Click += new System.EventHandler(this.btnBrowseImportFile_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnBrowseImportFile);
+            this.groupBox1.Controls.Add(this.txtFilePath);
+            this.groupBox1.Location = new System.Drawing.Point(5, 34);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(711, 54);
+            this.groupBox1.TabIndex = 11;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "All Processes Export to Excel file";
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flowLayoutPanel1.Controls.Add(this.checkAll);
+            this.flowLayoutPanel1.Controls.Add(this.checkedListBox1);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(7, 19);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(698, 281);
+            this.flowLayoutPanel1.TabIndex = 12;
+            // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.AllowDrop = true;
+            this.checkedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.checkedListBox1.CheckOnClick = true;
+            this.checkedListBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Location = new System.Drawing.Point(0, 26);
+            this.checkedListBox1.Margin = new System.Windows.Forms.Padding(0, 3, 3, 0);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(697, 254);
+            this.checkedListBox1.TabIndex = 5;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.flowLayoutPanel1);
+            this.groupBox2.Location = new System.Drawing.Point(5, 94);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(711, 314);
+            this.groupBox2.TabIndex = 13;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "List of Workflows";
+            // 
             // ManageWorkflowsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnBrowseImportFile);
-            this.Controls.Add(this.txtFilePath);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.checkedListBox1);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.toolStripMenu);
             this.Name = "ManageWorkflowsControl";
-            this.Size = new System.Drawing.Size(831, 534);
+            this.Size = new System.Drawing.Size(724, 424);
             this.Load += new System.EventHandler(this.MyPluginControl_Load);
             this.toolStripMenu.ResumeLayout(false);
             this.toolStripMenu.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -181,14 +233,17 @@
         private System.Windows.Forms.ToolStrip toolStripMenu;
         private System.Windows.Forms.ToolStripButton tsbLoadWorkflows;
         private System.Windows.Forms.ToolStripSeparator tssSeparator1;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtFilePath;
-        private System.Windows.Forms.Button btnBrowseImportFile;
         private System.Windows.Forms.ToolStripButton tsbUpdateWorkflowsList;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton tsbUpdateWorkflows;
+        private System.Windows.Forms.CheckBox checkAll;
         private System.Windows.Forms.ToolStripButton tsbClose;
+        private System.Windows.Forms.TextBox txtFilePath;
+        private System.Windows.Forms.Button btnBrowseImportFile;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
     }
 }

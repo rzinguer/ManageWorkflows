@@ -367,6 +367,15 @@ namespace ManageWorkflows
         {
             CloseTool();
         }
+
+        private void checkAll_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < checkedListBox1.Items.Count; i++)
+            {
+                checkedListBox1.SetItemChecked(i, checkAll.Checked);
+            }
+        }
+
     }
 
     public class WorkflowList
