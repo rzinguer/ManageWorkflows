@@ -378,9 +378,9 @@ namespace ManageWorkflows
             string msg = "You are selecting all workflows that will overwrite your current selection.  Are you sure you would like to continue?";
 
             if (checkAll.Checked == true)
-                msg = "By are selecting all workflows you will overwrite your current configuration!  Are you sure you would like to continue?";
+                msg = "By selecting all workflows you will overwrite your current configuration!  Are you sure you would like to continue?";
             else
-                msg = "By are un-selecting all workflows you will overwrite your current configuration!  Are you sure you would like to continue?";
+                msg = "By un-selecting all workflows you will overwrite your current configuration!  Are you sure you would like to continue?";
 
             if (MessageBox.Show(msg, "Confirm Workflows activation/deactivation",
                 MessageBoxButtons.YesNo,
