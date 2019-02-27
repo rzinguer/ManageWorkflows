@@ -88,7 +88,7 @@ namespace ManageWorkflows
                     if (result != null)
                     {
                         if (!isAdmin)
-                            ShowWarningNotification("Current user is not in System Admin role. Shows only workflows owned by the user", new Uri("https://docs.microsoft.com/en-us/dynamics365/customer-engagement/customize/workflow-processes#activate-a-workflow"));
+                            ShowWarningNotification("Current user is not in System Admin role. Show only workflows owned by the user", new Uri("https://docs.microsoft.com/en-us/dynamics365/customer-engagement/customize/workflow-processes#activate-a-workflow"));
 
                         //MessageBox.Show($"Found {result.Entities.Count} workflows");
 
@@ -359,7 +359,12 @@ namespace ManageWorkflows
 
         private void tsbUpdateWorkflows_Click(object sender, EventArgs e)
         {
-            ExecuteMethod(UpdateWorkflows);
+            if(MessageBox.Show("All checked workflows will be activated and all unchecked workflows will be deactivated on the server.\nAre you sure you would like to continue?", "Confirm Workflows activation/deactivation", 
+                MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+            {
+                ExecuteMethod(UpdateWorkflows);
+            }
         }
         
 
@@ -370,7 +375,19 @@ namespace ManageWorkflows
 
         private void checkAll_CheckedChanged(object sender, EventArgs e)
         {
-            for (int i = 0; i < checkedListBox1.Items.Count; i++)
+            string msg = "You are selecting all workflows that will overwrite your current selection.  Are you sure you would like to continue?";
+
+            if (checkAll.Checked == true)
+                msg = "By are selecting all workflows you will overwrite your current configuration!  Are you sure you would like to continue?";
+            else
+                msg = "By are un-selecting all workflows you will overwrite your current configuration!  Are you sure you would like to continue?";
+
+            if (MessageBox.Show(msg, "Confirm Workflows activation/deactivation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
+                return;
+
+                for (int i = 0; i < checkedListBox1.Items.Count; i++)
             {
                 checkedListBox1.SetItemChecked(i, checkAll.Checked);
             }

@@ -204,7 +204,7 @@
             this.groupBox2.Size = new System.Drawing.Size(711, 314);
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "List of Workflows";
+            this.groupBox2.Text = "List of Workflows - Select/Unselect Workflows to be Activated/Deactivated";
             // 
             // ManageWorkflowsControl
             // 
